@@ -1,0 +1,93 @@
+name: 🚀 Release Qurani CLI
+
+on:
+  push:
+    tags:
+      - 'v*'
+  release:
+    types: [published]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🔍 Get release info
+      id: release_info
+      run: |
+        if [[ $GITHUB_REF == refs/tags/* ]]; then
+          VERSION=${GITHUB_REF#refs/tags/}
+        else
+          VERSION="latest"
+        fi
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "Release version: $VERSION"
+        
+    - name: ✅ Validate script syntax
+      run: |
+        bash -n qurani.sh
+        echo "✓ Script syntax is valid"
+        
+    - name: 🧪 Test basic functionality
+      run: |
+        chmod +x qurani.sh
+        ./qurani.sh --version
+        ./qurani.sh list-reciters
+        echo "✓ Basic tests passed"
+        
+    - name: 📦 Create release archive
+      run: |
+        mkdir -p release
+        cp qurani.sh release/
+        cp README.md release/
+        cp -r assets release/ 2>/dev/null || true
+        tar -czf qurani-cli-${{ steps.release_info.outputs.version }}.tar.gz -C release .
+        
+    - name: 📊 Generate checksums
+      run: |
+        sha256sum qurani-cli-${{ steps.release_info.outputs.version }}.tar.gz > checksums.txt
+        sha256sum qurani.sh >> checksums.txt
+        
+    - name: 🏷️ Upload release assets
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: |
+          qurani-cli-${{ steps.release_info.outputs.version }}.tar.gz
+          checksums.txt
+          qurani.sh
+        body: |
+          ## 🕌 Qurani CLI ${{ steps.release_info.outputs.version }}
+          
+          ### 📥 Installation
+          
+          **Quick install:**
+          ```bash
+          curl -sSL https://github.com/MahdiDbh/Quran_cli/releases/latest/download/qurani.sh -o ~/.local/bin/qurani
+          chmod +x ~/.local/bin/qurani
+          ```
+          
+          **System-wide install:**
+          ```bash
+          sudo curl -sSL https://github.com/MahdiDbh/Quran_cli/releases/latest/download/qurani.sh -o /usr/local/bin/qurani
+          sudo chmod +x /usr/local/bin/qurani
+          ```
+          
+          ### 🎵 Usage
+          ```bash
+          qurani                    # Show help
+          qurani list-surahs        # List all surahs
+          qurani list-reciters      # List reciters
+          qurani play الفاتحة        # Play Al-Fatiha
+          ```
+          
+          ### ✅ Checksums
+          Verify your download with the checksums in `checksums.txt`
+          
+          ---
+          **بارك الله فيكم | May Allah bless you all**
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
