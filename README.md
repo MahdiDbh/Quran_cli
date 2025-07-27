@@ -4,7 +4,7 @@
 
 ![Qurani CLI Banner](./assets/banner.svg)
 
-[![GitHub release](https://img.shields.io/github/release/MahdiDbh/Quran_cli.svg)](https://github.com/MahdiDbh/Quran_cli/releases)
+
 [![License](https://img.shields.io/github/license/MahdiDbh/Quran_cli.svg)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/MahdiDbh/Quran_cli.svg?style=social)](https://github.com/MahdiDbh/Quran_cli/stargazers)
 
