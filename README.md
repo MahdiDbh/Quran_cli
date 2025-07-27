@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/github/license/MahdiDbh/Quran_cli.svg)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/MahdiDbh/Quran_cli.svg?style=social)](https://github.com/MahdiDbh/Quran_cli/stargazers)
 
-**🎵 A beautiful command-line interface to listen to Quran recitations**  
+** A beautiful command-line interface to listen to Quran recitations**  
 *أداة سطر أوامر جميلة للاستماع إلى تلاوات القرآن الكريم*
 
 [English](#english) | [العربية](#arabic)
@@ -31,7 +31,7 @@
 - 🌐 **Bilingual support** - Arabic & English
 - 📱 **Easy installation** with one command
 - 🔄 **Auto-update** functionality
-- 🎵 **High-quality audio** streaming
+-  **High-quality audio** streaming
 
 </td>
 <td width="50%">
