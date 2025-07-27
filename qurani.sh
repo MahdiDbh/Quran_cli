@@ -1,6 +1,28 @@
 #!/bin/bash
 
-# --- data surahs ---
+# Startup splash screen
+startup_splash() {
+  clear
+  echo -e "${LIGHT_CYAN}${BOLD}"
+  echo "                    🕌 QURANI CLI STARTING... 🕌"
+  echo -e "${NC}"
+  
+  # Simple loading animation
+  echo -n -e "${YELLOW}Loading"
+  for i in {1..3}; do
+    sleep 0.3
+    echo -n "."
+  done
+  echo -e " ${LIGHT_GREEN}Done!${NC}\n"
+  sleep 0.5
+}
+
+# Show startup splash only if running interactively
+if [[ $# -gt 0 ]] && [[ "$1" != "--no-splash" ]]; then
+  startup_splash
+fi
+
+# --- data surahs---
 declare -a surah_ar=(
 "الفاتحة" "البقرة" "آل عمران" "النساء" "المائدة" "الأنعام" "الأعراف" "الأنفال" "التوبة" "يونس"
 "هود" "يوسف" "الرعد" "إبراهيم" "الحجر" "النحل" "الإسراء" "الكهف" "مريم" "طه"
@@ -45,58 +67,158 @@ GREEN='\033[0;32m'
 CYAN='\033[0;36m'
 BOLD='\033[1m'
 YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+MAGENTA='\033[0;35m'
+WHITE='\033[1;37m'
+LIGHT_GREEN='\033[1;32m'
+LIGHT_BLUE='\033[1;34m'
+LIGHT_CYAN='\033[1;36m'
+LIGHT_YELLOW='\033[1;33m'
+DIM='\033[2m'
+UNDERLINE='\033[4m'
+BLINK='\033[5m'
 NC='\033[0m' # لا لون
 
 # --- Banner Qurani ---
 banner() {
-  echo -e "${CYAN}${BOLD}"
-  echo " ________                                              .__  .__  "
-  echo " \_____  \  __ ______________    ____             ____ |  | |__| "
-  echo "  /  / \  \|  |  \_  __ \__  \  /    \   ______ _/ ___\|  | |  | "
-  echo " /   \_/.  \  |  /|  | \// __ \|   |  \ /_____/ \  \___|  |_|  | "
-  echo " \_____\ \_/____/ |__|  (____  /___|  /          \___  >____/__| "
-  echo "        \__>                 \/     \/               \/          "
-  echo -e "${NC}${YELLOW}                    Qurani CLI by Mahdi Debbah${NC}\n"
-  echo -e "${GREEN}مرحبا بك في Qurani - اسمع القرآن من الترمنال!${NC}"
-  echo -e "${BOLD}الأوامر المتوفرة:${NC}"
-  echo -e "  ${YELLOW}list-surahs${NC}    - عرض جميع السور (بالأرقام، العربية والإنجليزية)"
-  echo -e "  ${YELLOW}list-reciters${NC}  - عرض قائمة القراء المتوفرين"
-  echo -e "  ${YELLOW}play <sura> [reciter]${NC} - تشغيل سورة برقمها أو اسمها (عربي أو إنجليزي) واختيار القارئ"
-  echo -e "\n${CYAN}أمثلة استعمال:${NC}"
-  echo -e "  qurani play الفاتحة"
-  echo -e "  qurani play 2 hus"
-  echo -e "  qurani play Al-Baqara abd"
-  echo -e "\n${YELLOW}ملاحظة:${NC} إذا لم تحدد القارئ سيُشغل مشاري العفاسي تلقائيا."
-  echo -e "\n${BOLD}برمجة: مهدي دبّاح / Mahdi Debbah${NC}"
-  echo -e "\n${GREEN}Help in English:${NC}"
-  echo -e "${BOLD}Available commands:${NC}"
-  echo -e "  ${YELLOW}list-surahs${NC}    - Show all Surahs (with number, Arabic & English name)"
-  echo -e "  ${YELLOW}list-reciters${NC}  - List available reciters"
-  echo -e "  ${YELLOW}play <sura> [reciter]${NC} - Play a surah by number, Arabic or English name, and choose reciter"
-  echo -e "\n${CYAN}Usage examples:${NC}"
-  echo -e "  qurani play Al-Fatiha"
-  echo -e "  qurani play 2 hus"
-  echo -e "  qurani play Al-Baqara abd"
-  echo -e "\n${YELLOW}Note:${NC} If you don't specify the reciter, Mishary Alafasy will be used by default."
-  echo -e "\n${BOLD}Developed by: Mahdi Debbah${NC}"
+  clear
+  echo -e "${LIGHT_CYAN}${BOLD}"
+  echo "╔══════════════════════════════════════════════════════════════════════════════╗"
+  echo "║                                                                              ║"
+  echo "║  ________                                              .__  .__              ║"
+  echo "║  \_____  \  __ ______________    ____             ____ |  | |__|             ║"
+  echo "║   /  / \  \|  |  \_  __ \__  \  /    \   ______ _/ ___\|  | |  |             ║"
+  echo "║  /   \_/.  \  |  /|  | \// __ \|   |  \ /_____/ \  \___|  |_|  |             ║"
+  echo "║  \_____\ \_/____/ |__|  (____  /___|  /          \___  >____/__|             ║"
+  echo "║         \__>                 \/     \/               \/                      ║"
+  echo "║                                                                              ║"
+  echo "╚══════════════════════════════════════════════════════════════════════════════╝"
+  echo -e "${NC}"
+  
+  # Animated title
+  echo -e "${YELLOW}${BOLD}                    🕌 Qurani CLI by Mahdi Debbah 🕌${NC}\n"
+  
+  # Beautiful separator
+  echo -e "${LIGHT_CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  
+  echo -e "${LIGHT_GREEN}${BOLD}✨ مرحبا بك في Qurani - اسمع القرآن من الترمنال! ✨${NC}"
+  echo -e "${LIGHT_CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  
+  echo -e "${WHITE}${BOLD}📋 الأوامر المتوفرة:${NC}"
+  echo -e "  ${LIGHT_YELLOW}📜 list-surahs${NC}     - عرض جميع السور (بالأرقام، العربية والإنجليزية)"
+  echo -e "  ${LIGHT_YELLOW}🎙️  list-reciters${NC}   - عرض قائمة القراء المتوفرين"
+  echo -e "  ${LIGHT_YELLOW}▶️  play <sura> [reciter]${NC} - تشغيل سورة برقمها أو اسمها واختيار القارئ"
+  
+  echo -e "\n${LIGHT_CYAN}${BOLD}💡 أمثلة استعمال:${NC}"
+  echo -e "  ${LIGHT_GREEN}qurani play الفاتحة${NC}"
+  echo -e "  ${LIGHT_GREEN}qurani play 2 hus${NC}"
+  echo -e "  ${LIGHT_GREEN}qurani play Al-Baqara abd${NC}"
+  
+  echo -e "\n${YELLOW}${BLINK}⚠️${NC} ${YELLOW}ملاحظة:${NC} إذا لم تحدد القارئ سيُشغل مشاري العفاسي تلقائيا."
+  
+  echo -e "\n${DIM}${BOLD}👨‍💻 برمجة: مهدي دبّاح / Mahdi Debbah${NC}"
+  
+  # English section with beautiful formatting
+  echo -e "\n${LIGHT_CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo -e "${LIGHT_GREEN}${BOLD}🌟 Help in English 🌟${NC}"
+  echo -e "${LIGHT_CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  
+  echo -e "${WHITE}${BOLD}📋 Available commands:${NC}"
+  echo -e "  ${LIGHT_YELLOW}📜 list-surahs${NC}     - Show all Surahs (with number, Arabic & English name)"
+  echo -e "  ${LIGHT_YELLOW}🎙️  list-reciters${NC}   - List available reciters"
+  echo -e "  ${LIGHT_YELLOW}▶️  play <sura> [reciter]${NC} - Play a surah by number, Arabic or English name"
+  
+  echo -e "\n${LIGHT_CYAN}${BOLD}💡 Usage examples:${NC}"
+  echo -e "  ${LIGHT_GREEN}qurani play Al-Fatiha${NC}"
+  echo -e "  ${LIGHT_GREEN}qurani play 2 hus${NC}"
+  echo -e "  ${LIGHT_GREEN}qurani play Al-Baqara abd${NC}"
+  
+  echo -e "\n${YELLOW}${BLINK}⚠️${NC} ${YELLOW}Note:${NC} If you don't specify the reciter, Mishary Alafasy will be used by default."
+  echo -e "\n${DIM}${BOLD}👨‍💻 Developed by: Mahdi Debbah${NC}"
+  
+  # Final beautiful separator
+  echo -e "${LIGHT_CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n"
 }
 
-# --- help functions---
-list_surahs() {
-  printf "%-4s | %-20s | %-20s\n" "No" "Arabic" "English"
-  echo "---------------------------------------------------------------"
-  for i in "${!surah_ar[@]}"; do
-    printf "%03d  | %-20s | %-20s\n" $((i+1)) "${surah_ar[$i]}" "${surah_en[$i]}"
+# --- دوال المساعدة ---
+
+# Loading animation function
+show_loading() {
+  local message="$1"
+  local delay=0.1
+  local chars="⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
+  
+  echo -n -e "${LIGHT_CYAN}${message}${NC} "
+  for (( i=0; i<20; i++ )); do
+    for (( j=0; j<${#chars}; j++ )); do
+      echo -n -e "${YELLOW}${chars:$j:1}${NC}"
+      sleep $delay
+      echo -n -e "\b"
+    done
   done
+  echo -e " ${LIGHT_GREEN}✓${NC}"
+}
+
+# Progress bar function
+show_progress() {
+  local duration=$1
+  local bar_length=50
+  local progress=0
+  
+  echo -n -e "${LIGHT_CYAN}Progress: ${NC}["
+  
+  for (( i=0; i<=bar_length; i++ )); do
+    if (( i <= progress )); then
+      echo -n -e "${LIGHT_GREEN}█${NC}"
+    else
+      echo -n -e "${DIM}▒${NC}"
+    fi
+  done
+  
+  echo -e "] ${LIGHT_GREEN}100%${NC}"
+}
+
+list_surahs() {
+  echo -e "${LIGHT_CYAN}${BOLD}"
+  echo "╔══════════════════════════════════════════════════════════════════════════════╗"
+  echo "║                           📖 قائمة السور - Surahs List 📖                    ║"
+  echo "╚══════════════════════════════════════════════════════════════════════════════╝"
+  echo -e "${NC}"
+  
+  echo -e "${LIGHT_YELLOW}${BOLD}┌──────┬──────────────────────┬──────────────────────┐${NC}"
+  echo -e "${LIGHT_YELLOW}${BOLD}│ No   │ Arabic               │ English              │${NC}"
+  echo -e "${LIGHT_YELLOW}${BOLD}├──────┼──────────────────────┼──────────────────────┤${NC}"
+  
+  for i in "${!surah_ar[@]}"; do
+    if (( (i+1) % 10 == 0 )); then
+      printf "${LIGHT_GREEN}${BOLD}│ %03d  │ %-20s │ %-20s │${NC}\n" $((i+1)) "${surah_ar[$i]}" "${surah_en[$i]}"
+    else
+      printf "${WHITE}│ %03d  │ %-20s │ %-20s │${NC}\n" $((i+1)) "${surah_ar[$i]}" "${surah_en[$i]}"
+    fi
+  done
+  
+  echo -e "${LIGHT_YELLOW}${BOLD}└──────┴──────────────────────┴──────────────────────┘${NC}"
+  echo -e "${DIM}💡 استخدم الرقم أو الاسم العربي أو الإنجليزي للتشغيل${NC}"
 }
 
 list_reciters() {
-  printf "%-6s | %-20s | %-25s\n" "ID" "Arabic" "English"
-  echo "-------------------------------------------------------------"
+  echo -e "${LIGHT_CYAN}${BOLD}"
+  echo "╔══════════════════════════════════════════════════════════════════════════════╗"
+  echo "║                         🎙️  قائمة القراء - Reciters List 🎙️                  ║"
+  echo "╚══════════════════════════════════════════════════════════════════════════════╝"
+  echo -e "${NC}"
+  
+  echo -e "${LIGHT_YELLOW}${BOLD}┌────────┬──────────────────────┬───────────────────────────┐${NC}"
+  echo -e "${LIGHT_YELLOW}${BOLD}│ ID     │ Arabic               │ English                   │${NC}"
+  echo -e "${LIGHT_YELLOW}${BOLD}├────────┼──────────────────────┼───────────────────────────┤${NC}"
+  
   for id in "${!reciters[@]}"; do
     IFS="|" read -r ar en <<< "${reciters[$id]}"
-    printf "%-6s | %-20s | %-25s\n" "$id" "$ar" "$en"
+    printf "${LIGHT_GREEN}${BOLD}│ %-6s │ %-20s │ %-25s │${NC}\n" "$id" "$ar" "$en"
   done
+  
+  echo -e "${LIGHT_YELLOW}${BOLD}└────────┴──────────────────────┴───────────────────────────┘${NC}"
+  echo -e "${DIM}💡 استخدم الـ ID أو اسم القارئ للاختيار${NC}"
 }
 
 get_surah_number() {
@@ -127,27 +249,51 @@ play_surah() {
   reciter_arg="$2"
   surah_num=$(get_surah_number "$surah_arg")
   reciter_id=$(get_reciter_id "$reciter_arg")
+  
   if [[ -z $surah_num ]]; then
-    echo -e "${RED}❌ سورة غير موجودة! استخدم list-surahs${NC}"
+    echo -e "${RED}${BOLD}❌ ERROR: سورة غير موجودة! ${NC}"
+    echo -e "${YELLOW}💡 استخدم الأمر: ${LIGHT_GREEN}qurani list-surahs${NC}"
     exit 1
   fi
+  
   if [[ -z $reciter_id ]]; then
-    echo -e "${RED}❌ قارئ غير موجود! استخدم list-reciters${NC}"
+    echo -e "${RED}${BOLD}❌ ERROR: قارئ غير موجود! ${NC}"
+    echo -e "${YELLOW}💡 استخدم الأمر: ${LIGHT_GREEN}qurani list-reciters${NC}"
     exit 1
   fi
+  
   url="https://server8.mp3quran.net/${reciter_id}/$(printf "%03d" $surah_num).mp3"
-  echo -e "${GREEN}▶️ تشغيل: ${surah_en[$((surah_num-1))]} (${surah_ar[$((surah_num-1))]}) - ${reciters[$reciter_id]}${NC}"
+  
+  # Beautiful playing message
+  echo -e "${LIGHT_CYAN}${BOLD}"
+  echo "╔══════════════════════════════════════════════════════════════════════════════╗"
+  echo "║                                Now Playing                                   ║"
+  echo "╚══════════════════════════════════════════════════════════════════════════════╝"
+  echo -e "${NC}"
+  
+  IFS="|" read -r ar_name en_name <<< "${reciters[$reciter_id]}"
+  
+  echo -e "${LIGHT_GREEN}${BOLD}📖 Surah:${NC} ${WHITE}${surah_en[$((surah_num-1))]} (${surah_ar[$((surah_num-1))]})${NC}"
+  echo -e "${LIGHT_BLUE}${BOLD}🎙️  Reciter:${NC} ${WHITE}${ar_name} - ${en_name}${NC}"
+  echo -e "${LIGHT_YELLOW}${BOLD}🔗 URL:${NC} ${DIM}${url}${NC}"
+  
+  echo -e "\n${LIGHT_CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo -e "${YELLOW}${BLINK}▶️${NC} ${LIGHT_GREEN}Loading and playing...${NC}"
+  echo -e "${LIGHT_CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n"
+  
   if command -v mpv &>/dev/null; then
     mpv --no-video "$url"
   elif command -v vlc &>/dev/null; then
     cvlc --play-and-exit "$url"
   else
-    echo -e "${RED}يرجى تثبيت mpv أو vlc${NC}"
+    echo -e "${RED}${BOLD}❌ ERROR: ${NC}${RED}يرجى تثبيت mpv أو vlc${NC}"
+    echo -e "${YELLOW}💡 To install mpv: ${LIGHT_GREEN}sudo apt install mpv${NC}"
+    echo -e "${YELLOW}💡 To install vlc: ${LIGHT_GREEN}sudo apt install vlc${NC}"
     exit 1
   fi
 }
 
-# --- commands---
+# --- تنفيذ الأوامر ---
 if [[ $# -eq 0 ]]; then
   banner
   exit 0
@@ -155,16 +301,42 @@ fi
 
 case "$1" in
   list-surahs)
+    echo -e "${LIGHT_CYAN}🔍 Loading Surahs list...${NC}"
+    sleep 0.5
     list_surahs
     ;;
   list-reciters)
+    echo -e "${LIGHT_CYAN}🔍 Loading Reciters list...${NC}"
+    sleep 0.5
     list_reciters
     ;;
   play)
-    if [[ -z "$2" ]]; then banner; exit 1; fi
+    if [[ -z "$2" ]]; then 
+      echo -e "${RED}${BOLD}❌ ERROR: ${NC}${RED}يرجى تحديد السورة!${NC}"
+      echo -e "${YELLOW}💡 Example: ${LIGHT_GREEN}qurani play الفاتحة${NC}"
+      banner
+      exit 1
+    fi
+    echo -e "${LIGHT_CYAN}🎵 Preparing to play Quran...${NC}"
+    sleep 0.3
     play_surah "$2" "${3:-afs}"
     ;;
+  --help|-h|help)
+    banner
+    ;;
+  --version|-v|version)
+    echo -e "${LIGHT_CYAN}${BOLD}"
+    echo "╔══════════════════════════════════════════════════════════════════════════════╗"
+    echo "║                                Qurani CLI  v1.0                              ║"
+    echo "║                              🕌 First Edition 🕌                             ║"
+    echo "║                              by Mahdi Debbah  <3                             ║"
+    echo "╚══════════════════════════════════════════════════════════════════════════════╝"
+    echo -e "${NC}"
+    ;;
   *)
+    echo -e "${RED}${BOLD}❌ ERROR: ${NC}${RED}أمر غير معروف!${NC}"
+    echo -e "${YELLOW}💡 Use: ${LIGHT_GREEN}qurani --help${NC} ${YELLOW}for available commands${NC}"
+    echo ""
     banner
     ;;
 esac
