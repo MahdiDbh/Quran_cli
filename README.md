@@ -352,14 +352,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ---
 
-## 🙏 Acknowledgments | شكر وتقدير
-
-- **القراء الكرام** for their beautiful recitations
-- **mp3quran.net** for providing the audio files
-- **Open source community** for inspiration and tools
-- **Contributors** who help improve this project
-
----
 
 ## 👨‍� Author | المطور
 
@@ -368,7 +360,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 **Mahdi Debbah** | **مهدي دبّاح**
 
 [![GitHub](https://img.shields.io/badge/GitHub-MahdiDbh-black?style=for-the-badge&logo=github)](https://github.com/MahdiDbh)
-[![Email](https://img.shields.io/badge/Email-Contact-blue?style=for-the-badge&logo=gmail)](mailto:your-email@example.com)
+[![Email](https://img.shields.io/badge/Email-Contact-blue?style=for-the-badge&logo=gmail)](mailto:mahdi.debbah@outlook.com)
 
 *Made with ❤️ for the Muslim community*  
 *صُنع بـ ❤️ للمجتمع المسلم*
