@@ -139,8 +139,8 @@ sudo chmod +x /usr/local/bin/qurani
 
 <table>
 <tr>
-<th width="50%">🇺🇸 English Commands</th>
-<th width="50%">🇸🇦 الأوامر العربية</th>
+<th width="50%"> English Commands</th>
+<th width="50%"> الأوامر العربية</th>
 </tr>
 <tr>
 <td>
@@ -229,7 +229,7 @@ sudo curl -sSL https://raw.githubusercontent.com/MahdiDbh/Quran_cli/main/qurani.
 
 <div align="center">
 
-### 🎵 Audio Player | مشغل الصوت
+###  Audio Player | مشغل الصوت
 
 You need **one** of these audio players installed:  
 *تحتاج إلى **واحد** من مشغلات الصوت هذه:*
